@@ -1,0 +1,34 @@
+server:
+  log_level: debug
+
+traces:
+  configs:
+  - name: default
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+    remote_write: # 資料往外傳送的位置
+      - endpoint: tempo:4317
+        insecure: true
+    batch:
+      timeout: 5s
+      send_batch_size: 100
+    service_graphs:
+      enabled: true
+    tail_sampling:
+      policies:
+        [
+          {
+            name: healthcheck-filter,
+            type: string_attribute,
+            string_attribute: 
+            {
+              key: key2, 
+              values: ['^\/(?:metrics|healthcheck)$'], 
+              enabled_regex_matching: true, 
+              invert_match: true
+            }
+          }
+        ]
