@@ -25,7 +25,7 @@ traces:
             type: string_attribute,
             string_attribute: 
             {
-              key: key2, 
+              key: http.url, 
               values: ['^\/(?:metrics|healthcheck)$'], 
               enabled_regex_matching: true, 
               invert_match: true
